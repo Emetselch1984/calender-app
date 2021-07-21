@@ -11,15 +11,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { mapActions  } from 'vuex';
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   name: "CalenderDetails",
   computed: {
-    ...mapGetters('events', ['events']),
+    ...mapGetters("events", ["events"]),
   },
   methods: {
-    ...mapActions('events', ['fetchEvents'])
-  }
+    ...mapActions("events", ["fetchEvents"]),
+  },
 };
 </script>

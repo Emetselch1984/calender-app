@@ -7,22 +7,22 @@
       </li>
     </ul>
     <button type="submit" @click="fetchEvents">fetchEvents</button>
-    <CalenderDetails/>
+    <CalenderDetails />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { mapActions  } from 'vuex';
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 import CalenderDetails from "@/components/CalenderDetails";
 export default {
   name: "Calender",
-  components: {CalenderDetails},
+  components: { CalenderDetails },
   computed: {
-    ...mapGetters('events', ['events']),
+    ...mapGetters("events", ["events"]),
   },
   methods: {
-    ...mapActions('events', ['fetchEvents'])
-  }
-}
+    ...mapActions("events", ["fetchEvents"]),
+  },
+};
 </script>
