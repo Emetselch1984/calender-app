@@ -37,7 +37,7 @@ const actions = {
     },
     setEvent({commit},event){
         commit('setEvent',event)
-    }
+    },
 };
 
 export default {
