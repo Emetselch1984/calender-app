@@ -9,6 +9,16 @@
       <DialogSection icon="mdi-square" :color="event.color || 'blue'">
         <v-text-field v-model="name" label="タイトル"></v-text-field>
       </DialogSection>
+      <DialogSection icon="mdi-clock-outline">
+        <v-date-picker
+            v-model="startDate"
+            no-title
+            local="ja-ja"
+            :day-format="startDate => new Date(startDate).getDate()"
+        >
+        </v-date-picker>
+        <p>{{startDate}}</p>
+      </DialogSection>
     </v-card-text>
     <v-card-actions class="d-flex justify-end">
       <v-btn @click="submit">保存</v-btn>
@@ -28,6 +38,7 @@ export default {
   },
   data: () => ({
     name: "",
+    startDate: null,
   }),
   methods: {
     ...mapActions("events", ["setEvent", "setEditMode", "createEvent"]),
@@ -38,7 +49,7 @@ export default {
     submit() {
       const params = {
         name: this.name,
-        start: this.event.start,
+        start: this.startDate,
         end: this.event.end,
       };
       this.createEvent(params);
