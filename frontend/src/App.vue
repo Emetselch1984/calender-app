@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <Calender/>
+      <Calender />
     </v-main>
   </v-app>
 </template>
