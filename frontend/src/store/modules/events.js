@@ -3,8 +3,9 @@ import axios from "axios";
 const apiUrl = "http://localhost:3000";
 
 const state = {
-  events: [],
-  event: null
+    events: [],
+    event: null,
+    isEditMode: false,
 };
 
 const getters = {
@@ -22,12 +23,13 @@ const getters = {
           start: new Date(state.event.start),
           end: new Date(state.event.end),
       } : null,
-
+    isEditMode: state => state.isEditMode
 };
 
 const mutations = {
     setEvents: (state, events) => (state.events = events),
     setEvent: (state,event) =>(state.event= event),
+    setEditMode: (state, bool) => (state.isEditMode = bool),
 };
 
 const actions = {
@@ -38,6 +40,9 @@ const actions = {
     setEvent({commit},event){
         commit('setEvent',event)
     },
+    setEditMode({commit},bool){
+        commit('setEditMode',bool)
+    }
 };
 
 export default {
