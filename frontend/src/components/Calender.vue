@@ -21,10 +21,12 @@
           (timestamp) => new Date(timestamp.date).getMonth() + 1 + ' /'
         "
         @click:event="showEvent"
+        @click:day="initEvent"
       ></v-calendar>
     </v-sheet>
     <v-dialog :value="event !== null" @click:outside="closeDialog" width="600">
       <EventDetailDialog v-if="event !== null"/>
+      <EventFormDialog v-if="event !== null"/>
     </v-dialog>
   </div>
 </template>
@@ -34,9 +36,10 @@ import { format } from "date-fns";
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 import EventDetailDialog from "@/components/EventDetailDialog";
+import EventFormDialog from "@/components/EventFormDialog";
 export default {
   name: "Calender",
-  components: {EventDetailDialog},
+  components: {EventFormDialog, EventDetailDialog},
   data: () => ({
     value: format(new Date(), "yyyy/MM/dd"),
     dialogMessage: "",
@@ -52,12 +55,19 @@ export default {
     setToday() {
       this.value = format(new Date(), "yyyy/MM/dd");
     },
-    showEvent({event}) {
+    showEvent({nativeEvent,event}) {
       this.setEvent(event)
+      nativeEvent.stopPropagation()
     },
     closeDialog(){
       this.setEvent(null)
-    }
+    },
+    initEvent({ date }) {
+      date = date.replace(/-/g, '/');
+      const start = format(new Date(date), 'yyyy/MM/dd 00:00:00')
+      const end = format(new Date(date), 'yyyy/MM/dd 01:00:00')
+      this.setEvent({ name: '', start, end, timed: true });
+    },
   },
 };
 </script>
