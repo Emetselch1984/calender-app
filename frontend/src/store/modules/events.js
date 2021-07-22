@@ -3,9 +3,9 @@ import axios from "axios";
 const apiUrl = "http://localhost:3000";
 
 const state = {
-    events: [],
-    event: null,
-    isEditMode: false,
+  events: [],
+  event: null,
+  isEditMode: false,
 };
 
 const getters = {
@@ -17,32 +17,39 @@ const getters = {
         end: new Date(event.end),
       };
     }),
-  event: state =>
-      state.event? {
+  event: (state) =>
+    state.event
+      ? {
           ...state.event,
           start: new Date(state.event.start),
           end: new Date(state.event.end),
-      } : null,
-    isEditMode: state => state.isEditMode
+        }
+      : null,
+  isEditMode: (state) => state.isEditMode,
 };
 
 const mutations = {
-    setEvents: (state, events) => (state.events = events),
-    setEvent: (state,event) =>(state.event= event),
-    setEditMode: (state, bool) => (state.isEditMode = bool),
+  setEvents: (state, events) => (state.events = events),
+  appendEvent: (state, event) => (state.events = [...state.events, event]),
+  setEvent: (state, event) => (state.event = event),
+  setEditMode: (state, bool) => (state.isEditMode = bool),
 };
 
 const actions = {
-    async fetchEvents({ commit }) {
-        const response = await axios.get(`${apiUrl}/events`);
-        commit("setEvents", response.data);
-    },
-    setEvent({commit},event){
-        commit('setEvent',event)
-    },
-    setEditMode({commit},bool){
-        commit('setEditMode',bool)
-    }
+  async fetchEvents({ commit }) {
+    const response = await axios.get(`${apiUrl}/events`);
+    commit("setEvents", response.data);
+  },
+  async createEvent({ commit }, event) {
+    const response = await axios.post(`${apiUrl}/events`, event);
+    commit("appendEvent", response.data);
+  },
+  setEvent({ commit }, event) {
+    commit("setEvent", event);
+  },
+  setEditMode({ commit }, bool) {
+    commit("setEditMode", bool);
+  },
 };
 
 export default {
