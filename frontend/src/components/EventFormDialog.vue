@@ -10,14 +10,7 @@
         <v-text-field v-model="name" label="タイトル"></v-text-field>
       </DialogSection>
       <DialogSection icon="mdi-clock-outline">
-        <v-date-picker
-            v-model="startDate"
-            no-title
-            local="ja-ja"
-            :day-format="startDate => new Date(startDate).getDate()"
-        >
-        </v-date-picker>
-        <p>{{startDate}}</p>
+        <DateForm v-model="startDate"/>
       </DialogSection>
     </v-card-text>
     <v-card-actions class="d-flex justify-end">
@@ -30,9 +23,11 @@
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 import DialogSection from "@/components/DialogSection";
+import DateForm from "@/components/DateForm";
+import { format } from 'date-fns';
 export default {
   name: "EventFormDialog",
-  components: { DialogSection },
+  components: {DateForm, DialogSection },
   computed: {
     ...mapGetters("events", ["event"]),
   },
@@ -40,6 +35,9 @@ export default {
     name: "",
     startDate: null,
   }),
+  created() {
+    this.startDate = format(this.event.start, 'yyyy/MM/dd');
+  },
   methods: {
     ...mapActions("events", ["setEvent", "setEditMode", "createEvent"]),
     closeDialog() {
