@@ -25,7 +25,7 @@ import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 import DialogSection from "@/components/DialogSection";
 import DateForm from "@/components/DateForm";
-import { format } from 'date-fns';
+
 export default {
   name: "EventFormDialog",
   components: {DateForm, DialogSection },
@@ -38,8 +38,8 @@ export default {
     endDate: null,
   }),
   created() {
-    this.startDate = format(this.event.start, 'yyyy/MM/dd');
-    this.endDate = format(this.event.end, 'yyyy/MM/dd');
+    this.startDate = this.event.startDate;
+    this.endDate = this.event.endDate;
   },
   methods: {
     ...mapActions("events", ["setEvent", "setEditMode", "createEvent"]),
