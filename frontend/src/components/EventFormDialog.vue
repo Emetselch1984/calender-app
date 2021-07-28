@@ -11,9 +11,14 @@
       </DialogSection>
       <DialogSection icon="mdi-clock-outline">
         <DateForm v-model="startDate"/>
-        <TimeForm v-model="startTime"/>
+        <div v-show="!allDay">
+          <TimeForm v-model="startTime"/>
+        </div>
         <DateForm v-model="endDate"/>
-        <TimeForm v-model="endTime"/>
+        <div v-show="!allDay">
+          <TimeForm v-model="endTime"/>
+        </div>
+        <CheckBox v-model="allDay" label="終日"></CheckBox>
       </DialogSection>
       <DialogSection icon="mdi-card-text-outline">
         <TextForm v-model="description"/>
@@ -36,10 +41,11 @@ import DateForm from "@/components/DateForm";
 import TimeForm from "@/components/TimeForm";
 import TextForm from "@/components/TextForm";
 import ColorForm from "@/components/ColorForm";
+import CheckBox from "@/components/CheckBox";
 
 export default {
   name: "EventFormDialog",
-  components: {ColorForm, TextForm, TimeForm, DateForm, DialogSection },
+  components: {CheckBox, ColorForm, TextForm, TimeForm, DateForm, DialogSection },
   computed: {
     ...mapGetters("events", ["event"]),
 
@@ -51,7 +57,8 @@ export default {
     endDate: null,
     endTime: null,
     description: '',
-    color: ''
+    color: '',
+    allDay: false,
   }),
   created() {
     this.startDate = this.event.startDate;
